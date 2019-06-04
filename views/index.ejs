@@ -3,15 +3,48 @@
   <head>
     <title>test</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      table{
+        border-collapse: collapse;
+      }
+      th{
+        background-color: floralwhite;
+        padding: 16px;
+      }
+      td{
+        padding: 9px;
+      }
+      th, td{
+        text-align: center;
+      }
+    </style> 
   </head>
   <body>
+  <center>
     <table border="1">
-      <% for (const result of results) { %>
         <tr>
-          <td>이름</td>
-          <td><h1><%= result.ENAME %></h1></td>
+          <th>고유번호</th>
+          <th>이름</th>
+          <th>나이</th>
+          <th>생일</th>
+          <th>성별</th>
+          <th>취미</th>
+          <th>전화번호</th>
+          <th>이메일</th>
+        </tr>
+        <% for (const result of results) { %>
+        <tr>
+          <td><%= result.id %></td>
+          <td><%= result.name %></td>
+          <td><%= result.age %></td>
+          <td><%= result.gender %></td>
+          <td><%= result.birth %></td>
+          <td><%= result.hobby %></td>
+          <td><%= result.phone %></td>
+          <td><%= result.email %></td>
         </tr>
       <% } %>
     </table>
+  </center>
   </body>
 </html>

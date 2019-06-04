@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html oncontextmenu="return false" onselectstart="return false">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <style>
+        td{
+            padding: 12px;
+        }
+        input{
+            font-size: 16px;
+        }
+        h1{
+            font-family: HY동녘M;
+            font-size: 72px;
+            color: paleturquoise;
+            text-shadow: 0 0 4px black;
+        }
+        .box{
+            padding: 10px;
+            border: 3px solid yellowgreen;
+            padding-left: 18px;
+            width: 270px;
+        }
+        label{
+            font-family: Cooper Blk BT;
+            font-size: 18px;
+        }
+        .button{
+            border: none;
+            background-color: white;
+            padding: 7px;
+            outline: none;
+            color: thistle;
+            font-weight: bold;  
+            font-size: 27px;
+        }
+    </style>
+</head> 
+<body>
+<center>
+    <form method="post" action="/login">
+        <h1>Login</h1>
+        <table>
+            <tr>
+                <td><label>I&nbsp;D :</label></td>
+                <td><input type="text" name="id" class="box" placeholder=" ID"></td>
+            </tr>
+            <tr>
+                <td><label>PW :</label></td>
+                <td><input type="password" name="pw" class="box" placeholder=" PW"></td>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" value="로그인" name="" class="button">
+        <!-- <div class="button1"><input type="submit" value="로그인" name="" class="button orange"></div> -->
+    </form>
+</center>
+</body>
+</html>
