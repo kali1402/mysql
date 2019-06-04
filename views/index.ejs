@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>test</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <table border="1">
+      <% for (const result of results) { %>
+        <tr>
+          <td>이름</td>
+          <td><h1><%= result.ENAME %></h1></td>
+        </tr>
+      <% } %>
+    </table>
   </body>
 </html>
