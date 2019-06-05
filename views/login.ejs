@@ -36,11 +36,17 @@
             font-size: 27px;
         }
     </style>
+    <script language="javascript">
+        if(<%= ERROR %> == 100){
+            alert("등록되어있지 않은 회원이거나 아이디 또는 비밀번호가 틀렸습니다.");
+        }
+    </script>
 </head> 
 <body>
 <center>
+    
     <form method="post" action="/login">
-        <h1>Login</h1>
+        <h1>로그인</h1>
         <table>
             <tr>
                 <td><label>I&nbsp;D :</label></td>
