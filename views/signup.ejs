@@ -49,113 +49,57 @@
             const getage = RegExp(/^[0-9]{1,3}$/);
             const getbirth = RegExp(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/);
             const getphone = RegExp(/^[0-9]{2,4}-[0-9]{4}-[0-9]{4}/);
-        
-            //이메일 공백 확인
-            if($("#email").val() == ""){
-                alert("이메일을 입력해주세요.");
-                $("#email").focus();
-                return false;
-            }
                 
             //이메일 유효성 검사
-            else if(!getemail.test($("#email").val())){
+            if(!getemail.test($("#email").val())){
                 alert("이메일형식에 맞게 입력해주세요.")
                 $("#email").val("");
                 $("#email").focus();
                 return false;
             }
 
-            //비밀번호 공백 확인
-            if($("#pw").val() == ""){
-                alert("비밀번호를 입력해주세요.");
-                $("#pw").focus();
-                return false;
-            }
-
             //비밀번호 유효성
-            else if(!getpw.test($("#pw").val())) {
+            if(!getpw.test($("#pw").val())) {
                 alert("비밀번호는 4~12자의 영문 대소문자와 숫자로만 입력해주세요.");
                 $("#pw").val("");
                 $("#pw").focus();
                 return false;
             }
 
-            //비밀번호확인 공백 확인
-            if($("#repw").val() == ""){
-                alert("비밀번호확인을 입력해주세요.");
-                $("#repw").focus();
-                return false;
-            }
-
             //비밀번호확인 유효성
-            else if($("#pw").val() != $("#repw").val()) {
+            if($("#pw").val() != $("#repw").val()) {
                 alert("비밀번호가 맞지 않습니다.");
                 $("#repw").val("");
                 $("#repw").focus();
                 return false;
             }
 
-            //이름 공백 확인
-            if($("#name").val() == ""){
-                alert("이름을 입력해주세요.");
-                $("#name").focus();
-                return false;
-            }
-
             //이름 유효성
-            else if (!getname.test($("#name").val())) {
+            if (!getname.test($("#name").val())) {
                 alert("이름은 한글로만 입력해주세요.");
                 $("#name").val("");
                 $("#name").focus();
                 return false;
             }
 
-            //나이 공백 확인
-            if($("#ag").val() == ""){
-                alert("나이를 입력해주세요.");
-                $("#age").focus();
-                return false;
-            }
-
             //나이 유효성
-            else if (!getage.test($("#age").val())) {
+            if (!getage.test($("#age").val())) {
                 alert("나이는 숫자로만 입력해주세요.");
                 $("#age").val("");
                 $("#age").focus();
                 return false;
             }
 
-            //생일 공백 확인
-            if($("#birth").val() == ""){
-                alert("생년월일을 입력해주세요.");
-                $("#birth").focus();
-                return false;
-            }
-
             //생일 유효성
-            else if (!getbirth.test($("#birth").val())) {
+            if (!getbirth.test($("#birth").val())) {
                 alert("생년월일은 '년-월-일'로 입력해주세요.");
                 $("#birth").val("");
                 $("#birth").focus();
                 return false;
             }
 
-            //취미 공백 확인
-            if($("#hobby").val() == ""){
-                alert("취미를 입력해주세요.");
-                $("#hobby").focus();
-                return false;
-            }
-
-            //전화번호 공백 확인
-            if($("#phone").val() == ""){
-                alert("전화번호를 입력해주세요.");
-                $("#phone").focus();
-                return false;
-            }
-
             //전화번호 유효성
-            else if (!getphone.test($("#phone").val())) {
+            if (!getphone.test($("#phone").val())) {
                 alert("전화번호는 '앞자리-중간자리-끝자리'로 입력해주세요.");
                 $("#phone").val("");
                 $("#phone").focus();
@@ -177,42 +121,31 @@
             <tr>
                 <th>* 이메일</th>
                 <td>│</td>
-                <td><input type="text" name="email" id="email"></td>
+                <td><input type="text" name="email" id="email" required></td>
             </tr>
             <tr>
                 <th>* 비밀번호</th>
                 <td>│</td>
-                <td><input type="password" name="pw" id="pw" maxlength="12"></td>
+                <td><input type="password" name="pw" id="pw" maxlength="12" required></td>
             </tr>
             <tr>
                 <th>* 비밀번호 확인</th>
                 <td>│</td>
-                <td><input type="password" name="repw" id="repw" maxlength="12"></td>
+                <td><input type="password" name="repw" id="repw" maxlength="12" required></td>
             </tr>
             <tr>
                 <th>* 이름</th>
                 <td>│</td>
-                <td><input type="text" name="name" id="name"></td>
+                <td><input type="text" name="name" id="name" required></td>
             </tr>
             <tr>
                 <th>* 나이</th>
                 <td>│</td>
-                <td><input type="text" name="age" id="age"></td>
-                <!-- <td>
-                    <form name="age" id="age">
-                        <select>
-                            <option selected>나이를 선택해주세요.</option>
-                            <% for (let i=1; i<=100; i++) { %>
-                            <option><%= i %>
-                            <% } %>
-                        </select>
-                    </form>
-                </td>
-            </tr> -->
+                <td><input type="text" name="age" id="age" required></td>
             <tr>
                 <th>* 생일</th>
                 <td>│</td>
-                <td><input type="text" name="birth" id="birth"></td>
+                <td><input type="text" name="birth" id="birth" required></td>
             </tr>
             <tr>
                 <th>* 성별</th>
@@ -222,12 +155,12 @@
             <tr>
                 <th>* 취미</th>
                 <td>│</td>
-                <td><input type="text" name="hobby" id="hobby"></td>
+                <td><input type="text" name="hobby" id="hobby" required></td>
             </tr>
             <tr>
                 <th>* 전화번호</th>
                 <td>│</td>
-                <td><input type="text" name="phone" id="phone"></td>
+                <td><input type="text" name="phone" id="phone" required></td>
             </tr>
         </table>
         <input type="submit" class="input" value="확인">
