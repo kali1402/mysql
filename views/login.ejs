@@ -34,6 +34,7 @@
             color: thistle;
             font-weight: bold;  
             font-size: 27px;
+            text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
         }
         a{
             font-weight: bold;  
@@ -41,31 +42,73 @@
             text-decoration: none;
             color: thistle;
             padding: 20px;
+            text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
         }
     </style>
-    <script language="javascript">
+    <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+        function checkz() {
+            const getemail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+            const getpw = RegExp(/^[a-zA-Z0-9]{4,12}$/);
+        
+            //이메일 공백 확인
+            if($("#email").val() == ""){
+                alert("이메일을 입력해주세요.");
+                $("#email").focus();
+                return false;
+            }
+                
+            //이메일 유효성 검사
+            else if(!getemail.test($("#email").val())){
+                alert("이메일형식에 맞게 입력해주세요.")
+                $("#email").val("");
+                $("#email").focus();
+                return false;
+            }
+
+            //비밀번호 공백 확인
+            if($("#pw").val() == ""){
+                alert("비밀번호를 입력해주세요.");
+                $("#pw").focus();
+                return false;
+            }
+
+            //비밀번호 유효성
+            else if(!getpw.test($("#pw").val())) {
+                alert("비밀번호는 4~12자의 영문 대소문자와 숫자로만 입력해주세요.");
+                $("#pw").val("");
+                $("#pw").focus();
+                return false;
+            }
+        }
+        
         if(<%= ERROR %> == 100){
             alert("등록되어있지 않은 회원이거나 아이디 또는 비밀번호가 틀렸습니다.");
         }
+
+        if(<%= SUCCESS %> == 100){
+            alert("정상적으로 회원가입이 되었습니다.");
+        }
+        
     </script>
 </head> 
 <body>
 <center>
     
-    <form method="post" action="/login">
+    <form method="post" action="/login" onsubmit="return checkz()">
         <h1>로그인</h1>
         <table>
             <tr>
                 <td><label>I&nbsp;D :</label></td>
-                <td><input type="text" name="id" class="box" placeholder=" ID"></td>
+                <td><input type="text" name="email" id="email" class="box" placeholder=" EMAIL"></td>
             </tr>
             <tr>
                 <td><label>PW :</label></td>
-                <td><input type="password" name="pw" class="box" placeholder=" PW"></td>
+                <td><input type="password" name="pw" id="pw" class="box" placeholder=" PW"></td>
             </tr>
         </table>
         <br>
-        <input type="submit" value="로그인" name="" class="button">
+        <input type="submit" value="로그인" class="button"> <a href="/signup">회원가입</a>
     </form>
 </center>
 </body>
