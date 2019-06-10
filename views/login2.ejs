@@ -11,8 +11,9 @@
             font-size: 42px;
             color: grey;
             text-shadow: 0px 1px #ffffff, 4px 4px 0px #dad7d7;
+            text-align: center;
         }
-        button{
+        button, a{
             background-color: white;
             border: none;
             font-weight: bold;  
@@ -22,34 +23,28 @@
             padding: 20px; 
             outline: none;
         }
-        a{
-            font-weight: bold;  
-            font-size: 27px;
-            text-decoration: none;
-            color: thistle;
-            padding: 20px; 
-        }
-        input, p{
-            border: none;
+        p{
             font-family: 한컴 솔잎 B; 
             font-size: 27px;
             color: black;
-            padding: 10px; 
+            margin-left: 550px;
         }
     </style>
 </head>
 <body>
-<center>
     <form method="post" action="/Iogin">
+        <input type="hidden" name="id" value="<%=id%>">
+        <input type="hidden" name="pw" value="<%=pw%>">
         <h1>로그인 되었습니다.</h1>
         
-        <p>ID : <input type="text" name="id" class="box" value="<%=ID%>"></p>
+        <p>ID : <%=id%></p>
         
-        <p>PW : <input type="text" name="pw" class="box" value="<%=PW%>"></p>
-        <button>로그인</button>
-        <a href="/logout">로그아웃</a>
-        <a href="/index">회원정보</a>
+        <p>PW : <%=pw%></p>
+        <center>
+            <button>로그인</button>
+            <a href="/logout">로그아웃</a>
+            <a href="/index">회원정보</a>
+        </center>
     </form>
-</center>
 </body>
 </html>
