@@ -22,6 +22,7 @@
             color: thistle;
             padding: 20px; 
             outline: none;
+            text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
         }
         p{
             font-family: 한컴 솔잎 B; 
@@ -29,9 +30,17 @@
             color: black;
             margin-left: 550px;
         }
+        /* .delete{
+            float: right;
+        } */
     </style>
 </head>
 <body>
+    <!-- <form method="post" action="/delete">
+        <input type="hidden" name="id" value="<%=id%>">
+        <input type="hidden" name="pw" value="<%=pw%>">
+        <button class="delete">회원탈퇴</button>
+    </form> -->
     <form method="post" action="/Iogin">
         <input type="hidden" name="id" value="<%=id%>">
         <input type="hidden" name="pw" value="<%=pw%>">
@@ -44,6 +53,11 @@
             <button>로그인</button>
             <a href="/logout">로그아웃</a>
             <a href="/index">회원정보</a>
+    </form>
+    <form method="post" action="/delete">
+        <input type="hidden" name="id" value="<%=id%>">
+        <input type="hidden" name="pw" value="<%=pw%>">
+        <button class="delete">회원탈퇴</button>
         </center>
     </form>
 </body>
