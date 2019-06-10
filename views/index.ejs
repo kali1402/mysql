@@ -4,32 +4,47 @@
     <title>test</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <style>
+      body{
+        margin: none;
+      }
       table{
         border-collapse: collapse;
       }
       th{
         background-color: floralwhite;
-        padding: 16px;
+        padding: 20px;
+        padding-right: 40px;
+        padding-left: 40px;
       }
       td{
-        padding: 9px;
+        padding: 10px;
       }
       th, td{
         text-align: center;
       }
       a{
-          font-weight: bold;  
-          font-size: 27px;
-          text-decoration: none;
-          color: thistle;
-          padding: 20px; 
+        float: right;
+        font-weight: bold;  
+        font-size: 20px;
+        text-decoration: none;
+        color: thistle;
+        text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
+      }
+      h1{
+        font-family: HY동녘M;
+        font-size: 42px;
+        color: grey;
+        text-shadow: 0px 1px #ffffff, 3px 3px 0px #dad7d7;
+        text-align: center;
       }
     </style> 
   </head>
   <body>
+  <a href="/logout">로그아웃</a>
   <center>
     <table border="1">
         <tr>
+          <h1>회원리스트</h1>
           <th>고유번호</th>
           <th>이름</th>
           <th>나이</th>
@@ -52,7 +67,6 @@
         </tr>
       <% } %>
     </table>
-      <p><a href="/logout">로그아웃</a></p>
   </center>
   </body>
 </html>
