@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html oncontextmenu="return false" onselectstart="return false">
+<!DOCTYPE html>  
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>로그인</title>
     <style>
         h1{ 
@@ -28,37 +28,26 @@
             font-family: 한컴 솔잎 B; 
             font-size: 27px;
             color: black;
-            margin-left: 550px;
         }
-        /* .delete{
-            float: right;
-        } */
     </style>
-</head>
-<body>
-    <!-- <form method="post" action="/delete">
-        <input type="hidden" name="id" value="<%=id%>">
-        <input type="hidden" name="pw" value="<%=pw%>">
-        <button class="delete">회원탈퇴</button>
-    </form> -->
-    <form method="post" action="/Iogin">
-        <input type="hidden" name="id" value="<%=id%>">
-        <input type="hidden" name="pw" value="<%=pw%>">
+</head>  
+<body> 
+    <center>
         <h1>로그인 되었습니다.</h1>
-        
-        <p>ID : <%=id%></p>
-        
-        <p>PW : <%=pw%></p>
-        <center>
-            <button>로그인</button>
-            <a href="/logout">로그아웃</a>
-            <a href="/index">회원정보</a>
-    </form>
-    <form method="post" action="/delete">
-        <input type="hidden" name="id" value="<%=id%>">
-        <input type="hidden" name="pw" value="<%=pw%>">
-        <button class="delete">회원탈퇴</button>
-        </center>
-    </form>
+        <p> 당신의 아이디는 : <%= id %></p>
+        <p> 당신의 비밀번호는 : <%= pw %></p>
+        <table>
+            <td>
+                <form method="get" action="/">
+                    <button>로그인</button>
+                </form>
+            </td>
+            <td>
+                <form action="/index">
+                    <button>회원정보</button>
+                </form>
+            </td>
+        </table>
+    </center>
 </body>
-</html>
+</html> 
