@@ -52,17 +52,17 @@
             const getpw = RegExp(/^[a-zA-Z0-9]{4,12}$/);
         
             //이메일 공백 확인
-            if($("#email").val() == ""){
+            if($("#id").val() == ""){
                 alert("이메일을 입력해주세요.");
-                $("#email").focus();
+                $("#id").focus();
                 return false;
             }
                 
             //이메일 유효성 검사
-            else if(!getemail.test($("#email").val())){
+            else if(!getemail.test($("#id").val())){
                 alert("이메일형식에 맞게 입력해주세요.")
-                $("#email").val("");
-                $("#email").focus();
+                $("#id").val("");
+                $("#id").focus();
                 return false;
             }
 
@@ -100,7 +100,7 @@
         <table>
             <tr>
                 <td><label>I&nbsp;D :</label></td>
-                <td><input type="text" name="email" id="email" class="box" placeholder=" EMAIL"></td>
+                <td><input type="text" name="id" id="id" class="box" placeholder=" EMAIL"></td>
             </tr>
             <tr>
                 <td><label>PW :</label></td>
