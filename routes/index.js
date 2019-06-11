@@ -17,9 +17,13 @@ const pool = mysql.createPool({
 router.get('/', function(req, res, next) {
   pool.getConnection(function(err, conn) {
     conn.query('SELECT * FROM player;', function(err, results) {
-      const error = 0;
-      const success = 0;
-      res.render('login', {ERROR: error, SUCCESS: success});
+      if (req.session.ID && req.session.PW ) {
+        res.render('index', { results : results });
+      } else {
+        const error = 0;
+        const success = 0;
+        res.render('login', {ERROR: error, SUCCESS: success});
+      }
       conn.release();
     });
   });
@@ -31,7 +35,13 @@ router.get('/index', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;',function(err, results){
       res.render('index', { results : results});
+
+      conn.query(`DELETE FROM kali.player WHERE id = '${req.query.id}';`,function(err, results){
+        conn.query('SELECT * FROM player;',function(err, results){
+          res.render('index', { results : results});
+        });
       conn.release();
+      });
     });
   });
 });
@@ -39,16 +49,16 @@ router.get('/index', function(req, res, next) {
 // 로그인 했을경우 있는 아이디, 비밀번호인지 확인후 맞으면 로그인 확인 페이지로 이동 틀릴경우 로그인 페이지로 이동
 router.post('/login', function(req, res, next) {
   
-  const id = req.body.email;
+  const id = req.body.id;
   const pw = req.body.pw;
-  
-  pool.getConnection(function(err, conn){
-    conn.query(`SELECT * FROM player WHERE email = '${id}' AND pw = md5('${pw}');`,function(err, result){
-      if(result.length > 0) {
-        res.render('login2', {id: id, pw: pw});
-      }
+  req.session.ID = req.body.id;
+  req.session.PW = req.body.pw;
 
-      if(result.length >= 0) {
+  pool.getConnection(function(err, conn){
+    conn.query(`SELECT * FROM player WHERE email = '${id}' AND pw = md5('${pw}');`,function(err, results){
+      if(results.length > 0) {
+        res.render('login2', {results: results, id: id, pw: pw});
+      } else {
         const error = 100;
         const success = 0;
         res.render('login', {ERROR: error, SUCCESS: success});
@@ -60,14 +70,28 @@ router.post('/login', function(req, res, next) {
 
 // 로그아웃 페이지 이동
 router.get('/logout', function(req, res, next) {
-  res.render('logout');
-  req.session.destroy();
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM user;', function(err, results){
+      if (req.session.ID && req.session.PW ) {
+        res.render('logout', { results : results });
+        req.session.destroy();
+      } else {
+        res.send('로그아웃 할 정보가 없습니다.');
+      }
+      conn.release();
+    });
+  });
 });
 
 // 회원가입 페이지 이동
 router.get('/signup', function(req, res, next) {
-  const error = 0;
-  res.render('signup', {ERROR: error});
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM user;', function(err, results){
+      const error = 0;
+      res.render('signup', {results: results, ERROR: error});
+      conn.release();
+    });
+  });
 });
 
 // 회원가입에서 적은 정보를 저장
@@ -98,21 +122,23 @@ router.post('/signup', function(req, res, next) {
 });
 
 // 로그인 상태에서 로그인을 눌렀을시 회원정보 페이지로 이동
-router.post('/Iogin', function(req, res, next) {
-  const id = req.body.id;
-  const pw = req.body.id;
-  if(id.length > 0 && pw.length > 0) {
-    pool.getConnection(function(err, conn){
-      conn.query('SELECT * FROM player;',function(err, results){
-        res.render('index', { results : results});
-        conn.release();
-      });
-    });
-  } else {
-    const error = 0;
-    const success = 0;
-    res.render('login', {ERROR: error, SUCCESS: success});
-  }
-});
+// router.post('/Iogin', function(req, res, next) {
+//   const id = req.body.id;
+//   const pw = req.body.pw;
+//   req.session.id = req.body.id;
+//   req.session.pw = req.body.pw;
+//   if(id.length > 0 && pw.length > 0) {
+//     pool.getConnection(function(err, conn){
+//       conn.query('SELECT * FROM player;',function(err, results){
+//         res.render('index', { results : results});
+//         conn.release();
+//       });
+//     });
+//   } else {
+//     const error = 0;
+//     const success = 0;
+//     res.render('login', {ERROR: error, SUCCESS: success});
+//   }
+// });
 
 module.exports = router;
