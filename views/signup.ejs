@@ -105,7 +105,6 @@
                 $("#phone").focus();
                 return false;
             }
-        
         }
 
         if(<%= ERROR %> == 100){
@@ -145,7 +144,7 @@
             <tr>
                 <th>* 생일</th>
                 <td>│</td>
-                <td><input type="text" name="birth" id="birth" required></td>
+                <td><input type="date" name="birth" id="birth" required></td>
             </tr>
             <tr>
                 <th>* 성별</th>
@@ -153,14 +152,14 @@
                 <td>남자 <input type="radio" name="gender" id="gender" value="남자" checked> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;여자 <input type="radio" name="gender" id="gender" value="여자"></td>
             </tr>
             <tr>
-                <th>* 취미</th>
-                <td>│</td>
-                <td><input type="text" name="hobby" id="hobby" required></td>
-            </tr>
-            <tr>
                 <th>* 전화번호</th>
                 <td>│</td>
-                <td><input type="text" name="phone" id="phone" required></td>
+                <td><input type="text" name="phone" id="phone"></td>
+            </tr>
+            <tr>
+                <th>취미</th>
+                <td>│</td>
+                <td><input type="text" name="hobby" id="hobby"></td>
             </tr>
         </table>
         <input type="submit" class="input" value="확인">
