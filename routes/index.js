@@ -71,7 +71,7 @@ router.post('/login', function(req, res, next) {
 // 로그아웃 페이지 이동
 router.get('/logout', function(req, res, next) {
   pool.getConnection(function(err, conn){
-    conn.query('SELECT * FROM user;', function(err, results){
+    conn.query('SELECT * FROM player;', function(err, results){
       if (req.session.ID && req.session.PW ) {
         res.render('logout', { results : results });
         req.session.destroy();
@@ -86,7 +86,7 @@ router.get('/logout', function(req, res, next) {
 // 회원가입 페이지 이동
 router.get('/signup', function(req, res, next) {
   pool.getConnection(function(err, conn){
-    conn.query('SELECT * FROM user;', function(err, results){
+    conn.query('SELECT * FROM player;', function(err, results){
       const error = 0;
       res.render('signup', {results: results, ERROR: error});
       conn.release();
@@ -121,24 +121,43 @@ router.post('/signup', function(req, res, next) {
   });
 });
 
-// 로그인 상태에서 로그인을 눌렀을시 회원정보 페이지로 이동
-// router.post('/Iogin', function(req, res, next) {
-//   const id = req.body.id;
-//   const pw = req.body.pw;
-//   req.session.id = req.body.id;
-//   req.session.pw = req.body.pw;
-//   if(id.length > 0 && pw.length > 0) {
-//     pool.getConnection(function(err, conn){
-//       conn.query('SELECT * FROM player;',function(err, results){
-//         res.render('index', { results : results});
-//         conn.release();
-//       });
-//     });
-//   } else {
-//     const error = 0;
-//     const success = 0;
-//     res.render('login', {ERROR: error, SUCCESS: success});
-//   }
-// });
+// ID 찾기 페이지 이동
+router.get('/idscan', function(req, res, next) {
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM player;', function(err, results){
+      res.render('idscan', {results: results});
+      conn.release();
+    });
+  });
+});
+
+// ID찾기에서 적은 정보를 저장
+router.post('/idscan', function(req, res, next) {
+  const name = req.body.name;
+  const age = req.body.age;
+  const gender = req.body.gender;
+  const birth = req.body.birth;
+  
+  pool.getConnection(function(err, conn){
+    conn.query(`SELECT * FROM player WHERE name = '${name}' AND age = '${age}' AND gender = '${gender}' AND birth = '${birth}'`,function(err, results){
+      // for (let index = 0; index < results.length; index++) {
+      //   console.log(results[index].email);
+      // }
+      if(results.length > 0) {
+        res.render('idcheck', {results: results});
+      }
+    });
+  });
+});
+
+// PW 찾기 페이지 이동
+router.get('/pwscan', function(req, res, next) {
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM player;', function(err, results){
+      res.render('pwscan', {results: results});
+      conn.release();
+    });
+  });
+});
 
 module.exports = router;
