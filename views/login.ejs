@@ -31,23 +31,31 @@
             background-color: white;
             padding: 7px;
             outline: none;
-            color: thistle;
+            color: lightslategrey;   
             font-weight: bold;  
             font-size: 27px;
             text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
         }
-        a{
+        .text{
             font-weight: bold;  
-            font-size: 27px;
+            font-size: 15px;
             text-decoration: none;
-            color: thistle;
-            padding: 20px;
+            color: black;
+            padding: 5px;
+            padding-right: 25px;
+            padding-left: 25px;
             text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
+        }
+        .box1{
+            width: 25%;
+            height: 0px;
+            background-color:rgb(208, 208, 208);
+            border: none;
         }
     </style>
     <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script>
-        function checkz() {
+        function check() {
             const getemail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
             const getpw = RegExp(/^[a-zA-Z0-9]{4,12}$/);
         
@@ -86,6 +94,10 @@
             alert("등록되어있지 않은 회원이거나 아이디 또는 비밀번호가 틀렸습니다.");
         }
 
+        if(<%= ERROR %> == 200){
+            alert("등록되어있지 않은 회원이거나 입력하신 값이 없습니다.");
+        }
+
         if(<%= SUCCESS %> == 100){
             alert("정상적으로 회원가입이 되었습니다.");
         }
@@ -95,7 +107,7 @@
 <body>
 <center>
     
-    <form method="post" action="/login" onsubmit="return checkz()">
+    <form method="post" action="/login" onsubmit="return check()">
         <h1>로그인</h1>
         <table>
             <tr>
@@ -107,8 +119,9 @@
                 <td><input type="password" name="pw" id="pw" class="box" placeholder=" PW"></td>
             </tr>
         </table>
-        <br>
-        <input type="submit" value="로그인" class="button"> <a href="/signup">회원가입</a>
+        <input type="submit" value="로그인" class="button"><br>
+        <input type="text" class="box1" disabled><br><br>
+        <a href="/idscan" class="text">ID 찾기</a>|<a href="/pwscan" class="text">PW 찾기</a>|<a href="/signup" class="text">회원가입</a>
     </form>
 </center>
 </body>
