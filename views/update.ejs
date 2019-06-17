@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html oncontextmenu="return false" onselectstart="return false">
+<head>
+    <meta charset="UTF-8">
+    <title>수정하기</title>
+</head>
+<body>
+    <form action="/board/update" method="post">
+        <input type="hidden" name="id" value="<%= id %>">
+        <table>
+            <tr>
+                <td>제목</td>
+                <td><input type="text" name="title"></td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td><textarea name="contents" cols="30" rows="10"></textarea></td>
+            </tr>
+        </table>
+        <input type="submit">
+    </form>
+</body>
+</html>
