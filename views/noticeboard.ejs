@@ -51,7 +51,10 @@
         padding: 20px;
         text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
       }
-    </style> 
+    </style>
+    <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+    </script>
   </head>
   <body>
   <a href="/logout" class="logout">로그아웃</a>
@@ -60,22 +63,23 @@
         <tr>
           <h1>게시판</h1>
           <th>번호</th>
-          <th>이름(아이디)</th>
+          <th>아이디</th>
           <th>제목</th>
           <th>내용</th>
+          <th>삭제</th>
         </tr>
         <% for (const result of results) { %>
         <tr>
           <td><%= result.id %></td>
-          <td><%= result.name %>(<%= result.email %>)</td>
-          <td><%= result.title %></td>
+          <td><%= result.email %></td>
+          <td><a href="/board/update?id=<%= result.id %>&email=<%= result.email %>" class="delete"><%= result.title %></a></td>
           <td><%= result.contents %></td>
+          <td><a href="/board/delete?id=<%= result.id %>&email=<%= result.email %>" class="delete">삭제</a></td>
         </tr>
       <% } %>
     </table>
     <br>
     <p><a href="/board/write">글 쓰기</a></p>
-    <p><a href="/board/see">내 글 보기</a></p>
   </center>
   </body>
 </html>
