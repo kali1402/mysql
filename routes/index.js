@@ -104,6 +104,7 @@ router.post('/signup', function(req, res, next) {
   const phone = req.body.phone;
   const email = req.body.email;
   const pw = req.body.pw;
+
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM player WHERE email = '${email}'`,function(err, result){
       if(result.length > 0) {
