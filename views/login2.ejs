@@ -1,5 +1,5 @@
 <!DOCTYPE html>  
-<html>
+<html oncontextmenu="return false" onselectstart="return false">
 <head>
     <meta charset="utf-8">
     <title>로그인</title>
@@ -35,7 +35,7 @@
     <center>
         <h1>로그인 되었습니다.</h1>
         <p> 당신의 아이디는 : <%= id %></p>
-        <p> 당신의 비밀번호는 : <%= pw %></p>
+        <!-- <p> 당신의 비밀번호는 : <%= pw %></p> -->
         <table>
             <td>
                 <form method="get" action="/">
@@ -43,8 +43,14 @@
                 </form>
             </td>
             <td>
-                <form action="/index">
-                    <button>회원정보</button>
+                <a href="/logout">로그아웃</a>
+            </td>
+            <td>
+                <a href="index">회원정보</a>
+            </td>
+            <td>
+                <form action="/board/noticeboard">
+                    <button>게시판</button>
                 </form>
             </td>
         </table>
