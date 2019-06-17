@@ -14,10 +14,10 @@ const pool = mysql.createPool({
 // 게시판 페이지 이동
 router.get('/noticeboard', function(req, res, next) {
     pool.getConnection(function(err, conn){
-      conn.query('SELECT * FROM noticeboard;', function(err, results){
+        conn.query('SELECT * FROM noticeboard;', function(err, results){
             res.render('noticeboard', {results: results});
-            conn.release();
         });
+        conn.release();
     });
 });
 
@@ -46,22 +46,47 @@ router.post('/write', function(req, res, next) {
     });
 });
 
-//게시판 내 글 보기 페이지 이동
-router.get('/see', function(req, res, next) {
-    pool.getConnection(function(err, conn){
-        conn.query(`SELECT * FROM noticeboard WHERE email='${req.session.ID}';`, function(err, results){
-            res.render('see', { results: results });
-            conn.release();
+//게시판 글 삭제
+router.get('/delete', function(req, res, next) {
+    if(req.query.email == req.session.ID) {
+        pool.getConnection(function(err, conn){
+            conn.query(`DELETE FROM noticeboard WHERE id='${req.query.id}';`, function(err, results) {
+                res.redirect('/board/noticeboard');
+                conn.release();
+            });
         });
+    } else {
+        res.render('deerror');
+    }
+})
+
+//게시판 글 수정 페이지 이동
+router.get('/update', function(req, res, next) {
+    pool.getConnection(function(err, conn){
+        if(req.query.email == req.session.ID) {
+            pool.getConnection(function(err, conn){
+                conn.query(`SELECT FROM noticeboard WHERE id='${req.query.id}';`, function(err, results) {
+                    res.render('update',{results: results, id: req.query.id});
+                    conn.release();
+                });
+            });
+        } else {
+            res.render('uperror');
+        }
     });
 });
 
-//게시판 글 삭제
-router.get('/delete', function(req, res, next) {
+//게시판 글 수정하기
+router.post('/update', function(req, res, next) {
+    const id = req.body.id;
+    const title = req.body.title;
+    const contents = req.body.contents;
     pool.getConnection(function(err, conn){
-        conn.query(`DELETE FROM noticeboard WHERE id='${req.query.id}'`, function(err, results){
-            res.redirect('/board/noticeboard');
-            conn.release();
+        conn.query(`UPDATE noticeboard SET title='${title}', contents='${contents}' WHERE id='${id}';`, function(err, results){
+            conn.query('SELECT * FROM noticeboard;', function(err, results){
+                res.render('noticeboard', {results: results});
+                conn.release();
+            });
         });
     });
 });
