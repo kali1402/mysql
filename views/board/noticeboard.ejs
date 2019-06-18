@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html oncontextmenu="return false" onselectstart="return false">
+  <head>
+    <title>게시판</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      body{
+        margin: none;
+      }
+      table{
+        border-collapse: collapse;
+      }
+      th{
+        background-color: floralwhite;
+        padding: 20px;
+        padding-right: 40px;
+        padding-left: 40px;
+      }
+      td{
+        padding: 10px;
+      }
+      th, td{
+        text-align: center;
+      }
+      .logout{
+        float: right;
+        font-weight: bold;  
+        font-size: 20px;
+        text-decoration: none;
+        color: thistle;
+        text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
+      }
+      h1{
+        font-family: HY동녘M;
+        font-size: 42px;
+        color: grey;
+        text-shadow: 0px 1px #ffffff, 3px 3px 0px #dad7d7;
+        text-align: center;
+      }
+      .delete{
+        font-size: 17px;
+        text-decoration: none;
+        color: black;
+        text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
+      }
+      a{
+        font-weight: bold;  
+        font-size: 27px;
+        text-decoration: none;
+        color: thistle;
+        padding: 20px;
+        text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
+      }
+    </style>
+    <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+    </script>
+  </head>
+  <body>
+  <a href="/logout" class="logout">로그아웃</a>
+  <center>
+    <table border="1">
+        <tr>
+          <h1>게시판</h1>
+          <th>ID</th>
+          <th>제목</th>
+          <th>글쓴이</th>
+          <th>삭제</th>
+        </tr>
+        <% for (const result of results) { %>
+        <tr>
+          <td><%= result.id %></td>
+          <td><a href="/board/board?id=<%= result.id %>" class="delete"><%= result.title %></a></td>
+          <td><%= result.emaiI %></td>
+          <td><a href="/board/delete?id=<%= result.id %>&emaiI=<%= result.emaiI %>" class="delete">삭제</a></td>
+          <% } %>
+        </tr>
+      
+    </table>
+    <br>
+    <p><a href="/board/write">글 쓰기</a></p>
+  </center>
+  </body>
+</html>
