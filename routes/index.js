@@ -1,17 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
-const app = express;
+const pool = require('../config/dbconfig');
 
-const pool = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'root',
-  password        : 'amcopeew48',
-  database        : 'kali',
-  dateStrings     : 'dete'
-});
 
 // 로그인 시작 페이지
 router.get('/', function(req, res, next) {
@@ -22,7 +12,7 @@ router.get('/', function(req, res, next) {
       } else {
         const error = 0;
         const success = 0;
-        res.render('login', {ERROR: error, SUCCESS: success});
+        res.render('index/login', {ERROR: error, SUCCESS: success});
       }
       conn.release();
     });
@@ -34,11 +24,11 @@ router.get('/index', function(req, res, next) {
 
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;',function(err, results){
-      res.render('index', { results : results});
+      res.render('index/index', { results : results});
 
       conn.query(`DELETE FROM kali.player WHERE id = '${req.query.id}';`,function(err, results){
         conn.query('SELECT * FROM player;',function(err, results){
-          res.render('index', { results : results});
+          res.render('index/index', { results : results});
         });
       conn.release();
       });
@@ -57,11 +47,11 @@ router.post('/login', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM player WHERE email = '${id}' AND pw = md5('${pw}');`,function(err, results){
       if(results.length > 0) {
-        res.render('login2', {results: results, id: id, pw: pw});
+        res.render('index/login2', {results: results, id: id, pw: pw});
       } else {
         const error = 100;
         const success = 0;
-        res.render('login', {ERROR: error, SUCCESS: success});
+        res.render('index/login', {ERROR: error, SUCCESS: success});
       }
     });
     conn.release();
@@ -73,7 +63,7 @@ router.get('/logout', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;', function(err, results){
       if (req.session.ID && req.session.PW ) {
-        res.render('logout', { results : results });
+        res.render('index/logout', { results : results });
         req.session.destroy();
       } else {
         res.send('로그아웃 할 정보가 없습니다.');
@@ -88,7 +78,7 @@ router.get('/signup', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;', function(err, results){
       const error = 0;
-      res.render('signup', {results: results, ERROR: error});
+      res.render('index/signup', {results: results, ERROR: error});
       conn.release();
     });
   });
@@ -109,13 +99,13 @@ router.post('/signup', function(req, res, next) {
     conn.query(`SELECT * FROM player WHERE email = '${email}'`,function(err, result){
       if(result.length > 0) {
         const error = 100;
-        res.render('signup', {ERROR: error});
+        res.render('index/signup', {ERROR: error});
       } else {
         conn.query(`INSERT INTO player(name, age, gender, birth, hobby, phone, email, pw)VALUES('${name}', '${age}', '${gender}', '${birth}', '${hobby}', '${phone}', '${email}', MD5('${pw}'));`,function(err, result){
           // conn.query(`SELECT * FROM player WHERE name = '${name}' AND age = '${age}' AND gender = '${gender}' AND birth = '${birth}' AND hobby = '${hobby}' AND phone = '${phone}' AND email = '${email}' AND pw = MD5('${pw}');`,function(err, result){
           const error = 0;
           const success = 100;
-          res.render('login', {ERROR: error, SUCCESS: success});
+          res.render('index/login', {ERROR: error, SUCCESS: success});
         });
       }
     });
@@ -126,7 +116,7 @@ router.post('/signup', function(req, res, next) {
 router.get('/idscan', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;', function(err, results){
-      res.render('idscan', {results: results});
+      res.render('index/idscan', {results: results});
       conn.release();
     });
   });
@@ -145,7 +135,7 @@ router.post('/idscan', function(req, res, next) {
       //   console.log(results[index].email);
       // }
       if(results.length > 0) {
-        res.render('idcheck', {results: results});
+        res.render('index/idcheck', {results: results});
       }
     });
   });
@@ -155,7 +145,7 @@ router.post('/idscan', function(req, res, next) {
 router.get('/pwscan', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;', function(err, results){
-      res.render('pwscan', {results: results});
+      res.render('index/pwscan', {results: results});
       conn.release();
     });
   });
