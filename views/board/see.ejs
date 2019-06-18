@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html oncontextmenu="return false" onselectstart="return false">
+<head>
+    <title>Test</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+        th{
+            background-color: floralwhite;
+        }
+        .num{
+            padding: 15px;
+        }
+        .id{
+            padding-right: 60px;
+            padding-left: 60px;
+        }
+        .title{
+            padding-right: 80px;
+            padding-left: 80px;
+        }
+        .contents{
+            padding-right: 300px;
+            padding-left: 300px;
+        }
+        .delete{
+            padding-right: 60px;
+            padding-left: 60px;
+        }
+        td{
+            padding: 10px;
+            font-size: 15px;
+        }
+        th, td{
+            text-align: center;
+        }
+        input{
+            font-size: 16px;
+        }
+        h1{
+            font-family: HY동녘M;
+            font-size: 42px;
+            color: grey;
+            text-shadow: 0px 1px #ffffff, 3px 3px 0px #dad7d7;
+            text-align: center;
+        }
+        a{
+            font-weight: bold;  
+            font-size: 20px;
+            text-decoration: none;
+            color: black;
+            outline: none;
+            text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <table border=1; style="font-size: 18px; border-collapse: collapse">
+        <tr>
+            <h1>내 글</h1>
+            <th class="num">번호</th>
+            <th class="id">이름(아이디)</th>
+            <th class="title">제목</th>
+            <th class="contents">내용</th>
+            <th class="delete">삭제</th>
+        </tr>
+        <% for (const result of results) { %>
+        <tr>
+            <td><%= result.id %></td>
+            <td><%= result.name %>(<%= result.email %>)</td>
+            <td><%= result.title %></td>
+            <td><%= result.contents %></td>
+            <td><a href="/board/delete?id=<%= result.id %>">삭제하기</a></td>
+        </tr>
+        <% } %>
+    </table>
+    </center>
+</body>
+</html>
