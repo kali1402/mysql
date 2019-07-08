@@ -5,9 +5,7 @@ const pool = require('../config/dbconfig');
 // 게시판 페이지 이동
 router.get('/noticeboard', function(req, res, next) {
     pool.getConnection(function(err, conn){
-        conn.query('SELECT * FROM noticeboard;', function(err, results){
-            console.log(results);
-            
+        conn.query(`SELECT a.*, (SELECT COUNT(*) FROM comment WHERE board_id=a.id) AS 'count' FROM noticeboard AS a;`, function(err, results){
             res.render('board/noticeboard', {results: results});
         });
         conn.release();
@@ -32,7 +30,7 @@ router.post('/write', function(req, res, next) {
     
     pool.getConnection(function(err, conn){
         conn.query(`INSERT INTO noticeboard (title, contents, emaiI) VALUES ('${title}','${contents}','${req.session.ID}');`, function(err, results){
-            res.redirect('/board/board/noticeboard');
+            res.redirect('/board/noticeboard');
             conn.release();
         });
     });
@@ -43,14 +41,16 @@ router.get('/delete', function(req, res, next) {
     if(req.query.emaiI == req.session.ID) {
         pool.getConnection(function(err, conn){
             conn.query(`DELETE FROM noticeboard WHERE id='${req.query.id}';`, function(err, results) {
-                res.redirect('/board/board/noticeboard');
-                conn.release();
+                conn.query(`DELETE FROM comment WHERE board_id='${req.query.id}';`, function(err, results) {
+                    res.redirect('/board/noticeboard');
+                    conn.release();
+                });
             });
         });
     } else {
         res.render('board/deerror');
     }
-})
+});
 
 //게시판 글 수정 페이지 이동
 router.get('/update', function(req, res, next) {
@@ -90,12 +90,10 @@ router.post('/update', function(req, res, next) {
 //게시판 제목 눌렀을때 상세페이지로 이동
 router.get('/board', function(req, res, next) {
     pool.getConnection(function(err, conn){
-        conn.query(`SELECT COUNT(board_id) AS 'count' FROM COMMENT WHERE board_id='${req.query.id}';`, function(err, counter){
-            conn.query(`SELECT * FROM comment WHERE board_id='${req.query.id}';`, function(err, board_results){
-                conn.query(`SELECT a.*,COUNT(b.email) AS 'count' FROM noticeboard AS a LEFT JOIN COMMENT AS b ON a.id=b.board_id WHERE a.id='${req.query.id}';`, function(err, results){
-                    const email = req.session.ID;
-                    res.render('board/board', {counter: counter, results: results, board_results: board_results, email: email});
-                });
+        conn.query(`SELECT * FROM comment WHERE board_id='${req.query.id}';`, function(err, board_results){
+            conn.query(`SELECT a.*,COUNT(b.email) AS 'count' FROM noticeboard AS a LEFT JOIN COMMENT AS b ON a.id=b.board_id WHERE a.id='${req.query.id}';`, function(err, results){
+                const email = req.session.ID;
+                res.render('board/board', {counter: board_results.length, results: results, board_results: board_results, email: email});
             });
         });
         conn.release();
@@ -113,28 +111,4 @@ router.post('/comment', function(req, res, next) {
         conn.release();
     });
 });
-
-//게시판 제목 눌렀을때 상세페이지로 이동
-// router.get('/board', function(req, res, next) {
-//     pool.getConnection(function(err, conn){
-//         console.log('id: '+req.query.id);
-        
-//         conn.query(`SELECT a.*,COUNT(b.email) AS 'count' FROM noticeboard AS a LEFT JOIN COMMENT AS b ON a.id=b.board_id WHERE a.id='${req.query.id}';`, function(err, results){
-//             console.log(results[0].count);
-//                 if(results[0].count > 0) {
-//                     conn.query(`SELECT a.*, b.* FROM noticeboard AS a INNER JOIN COMMENT AS b ON a.id=b.board_id WHERE a.id='${req.query.id}';`, function(err, results){
-//                         const email = req.session.ID;
-//                         res.render('board/board', {results: results, email: email});
-//                     });
-//                 } else {
-//                     conn.query(`SELECT * FROM noticeboard WHERE id='${req.query.id}';`, function(err, results){
-//                         const email = req.session.ID;
-//                         res.render('board/board', {results: results, email: email});
-//                     });
-//                 }
-//         });
-        
-//         conn.release();
-//     });
-// });
 module.exports = router;

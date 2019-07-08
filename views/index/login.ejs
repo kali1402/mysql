@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>로그인</title>
     <style>
+        a{
+            text-decoration: none;
+        }
         td{
             padding: 12px;
         }
@@ -116,10 +119,10 @@
             </tr>
             <tr>
                 <td><label>PW :</label></td>
-                <td><input type="password" name="pw" id="pw" class="box" placeholder=" PW"></td>
+                <td><input type="password" name="pw" id="pw" class="box" maxlength="12" placeholder=" PW"></td>
             </tr>
         </table>
-        <input type="submit" value="로그인" class="button"><br>
+        <input type="submit" value="로그인" class="button">|<a href="/auth/kakao" class="button">카카오톡</a><br>
         <input type="text" class="box1" disabled><br><br>
         <a href="/idscan" class="text">ID 찾기</a>|<a href="/pwscan" class="text">PW 찾기</a>|<a href="/signup" class="text">회원가입</a>
     </form>
