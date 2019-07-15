@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html oncontextmenu="return false" onselectstart="return false">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+    </script>
+</head>
+<body>
+    배팅금액 : <input type="text" value="<%= results.money %>" disabled><br><br>
+    player 값 : <%= results.odd %><%= results.even %>
+    결과 값 : <%= oddeven[0] %> <br><br>
+    얻은 돈 : <%= money %>
+    <br>
+    <br>
+    <a href="oddeven">뒤로가기</a>
+    <a href="game">목록</a>
+</body>
+</html>

@@ -2,13 +2,66 @@
 <html oncontextmenu="return false" onselectstart="return false">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>홀짝 배팅</title>
+    <style>
+        select{
+            margin-left: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+        option{
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
     <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script>
+        var number = Math.floor(Math.random() * 1) + 1;
+        document.write('주의 사항 <button onclick="button()">보기</button><br><br><form action="/game/oddeven" method="post"><input type="hidden" id="oddeven" name="oddeven" value="'+number+'">');
+
+        function showDiv( id ) { 
+            document.all.odd.style.visibility = 'hidden'; 
+            document.all.even.style.visibility = 'hidden'; 
+            document.all.odd.value = ''; 
+            document.all.even.value = ''; 
+            document.all[ id ].style.visibility = 'visible';
+        }
+
+        if(<%= error %> == 100) {
+            alert("보유금액보다 배팅금액이 많거나 배팅금액이 없습니다.");
+        }
+        if(<%= error %> == 200) {
+            alert("홀 또는 짝을 선택해주세요.");
+        }
+
+        function button() {
+            alert("※주의 사항\n1. 홀 or 짝이 맞으면 2배\n2. 홀 or 짝이 맞고 숫자가 같으면 5배");
+        }
     </script>
 </head>
 <body>
-    
-    <%= oddeven %>
+        보유 금액 : <input type="text" value="<%= results[0].money %>" disabled><br><br>
+        배팅 금액 : <input type="text" name="money" id="money" value=""><br><br>
+        홀 <input type="radio" name="oddeven" onClick="showDiv( 'odd' );">
+        <select name=odd style="visibility:hidden">
+            <option value="">-----선택-----</option>
+            <option value="1">1</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="9">9</option>
+        </select><br><br>
+        짝 <input type="radio" name="oddeven" onClick="showDiv( 'even' );">
+        <select name=even style="visibility:hidden">
+            <option value="">-----선택-----</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+        </select><br><br>
+
+        <button type="submit">확인</button>
+    </form>
 </body>
 </html>

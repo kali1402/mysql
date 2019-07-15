@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <script>
-        var number = Math.floor(Math.random() * 10) + 1;
-        document.write('<form action="/game/oddeven" method="post"><input type="hidden" id="oddeven" name="oddeven" value="'+number+'">');
-    </script>
 </head>
 <body>
-        <input type="text" name="money" id="money" value="">
-        <button>홀짝</button>
-    </form>
+    <center>
+        <h1>게임 목록</h1>
+        <a href="/game/oddeven">홀짝</a>
+    </center>
 </body>
 </html>
