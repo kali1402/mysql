@@ -15,10 +15,11 @@ router.get('/noticeboard', function(req, res, next) {
 //게시판 글 쓰기 페이지 이동
 router.get('/write', function(req, res, next) {
     pool.getConnection(function(err, conn){
-      conn.query(`SELECT * FROM noticeboard WHERE NAME='${req.session.ID}';`, function(err, results){
-            res.render('board/write', { results: results });
-            conn.release();
-        });
+            conn.query(`SELECT * FROM noticeboard WHERE NAME='${req.session.ID}';`, function(err, results){
+                res.render('board/write', { results: results });
+            });
+        
+        conn.release();
     });
 });
 
@@ -26,18 +27,21 @@ router.get('/write', function(req, res, next) {
 router.post('/write', function(req, res, next) {
     const title = req.body.title;
     const contents = req.body.contents;
-    
-    
     pool.getConnection(function(err, conn){
-        conn.query(`INSERT INTO noticeboard (title, contents, emaiI) VALUES ('${title}','${contents}','${req.session.ID}');`, function(err, results){
-            res.redirect('/board/noticeboard');
-            conn.release();
-        });
+            conn.query(`INSERT INTO noticeboard (title, contents, emaiI) VALUES ('${title}','${contents}','${req.session.ID}');`, function(err, results){
+                res.redirect('/board/noticeboard');
+            });
+        
+        
+        conn.release();
     });
 });
 
 //게시판 글 삭제
 router.get('/delete', function(req, res, next) {
+
+    console.log(req.query.id);
+    
     if(req.query.emaiI == req.session.ID) {
         pool.getConnection(function(err, conn){
             conn.query(`DELETE FROM noticeboard WHERE id='${req.query.id}';`, function(err, results) {
@@ -56,13 +60,10 @@ router.get('/delete', function(req, res, next) {
 router.get('/update', function(req, res, next) {
     pool.getConnection(function(err, conn){
         if(req.query.emaiI == req.session.ID) {
-            pool.getConnection(function(err, conn){
-                
-                conn.query(`SELECT * FROM noticeboard WHERE id='${req.query.id}';`, function(err, results) {
-                    conn.query(`SELECT * FROM comment WHERE board_id='${req.query.id}';`, function(err, board_results) {
-                        res.render('board/update',{results: results, board_results: board_results});
-                        conn.release();
-                    });
+            conn.query(`SELECT * FROM noticeboard WHERE id='${req.query.id}';`, function(err, results) {
+                conn.query(`SELECT * FROM comment WHERE board_id='${req.query.id}';`, function(err, board_results) {
+                    res.render('board/update',{results: results, board_results: board_results});
+                    conn.release();
                 });
             });
         } else {
@@ -79,11 +80,13 @@ router.post('/update', function(req, res, next) {
     
     pool.getConnection(function(err, conn){
         conn.query(`UPDATE noticeboard SET title='${title}', contents='${contents}' WHERE id='${id}';`, function(err, results){
-            conn.query('SELECT * FROM noticeboard;', function(err, results){
+            conn.query(`SELECT a.*, (SELECT COUNT(*) FROM comment WHERE board_id=a.id) AS 'count' FROM noticeboard AS a;`, function(err, results){
+                console.log(results);
+                
                 res.render('board/noticeboard', {results: results});
-                conn.release();
             });
         });
+        conn.release();
     });
 });
 
@@ -105,9 +108,11 @@ router.post('/comment', function(req, res, next) {
     const content = req.body.content;
     const board_id = req.body.id;
     pool.getConnection(function(err, conn){
-        conn.query(`INSERT INTO comment(board_id, email, content)VALUES('${board_id}','${req.session.ID}','${content}');`, function(err, results){
-            res.redirect(`/board/board?id=${board_id}`);
-        });
+            conn.query(`INSERT INTO comment(board_id, email, content)VALUES('${board_id}','${req.session.ID}','${content}');`, function(err, results){
+                res.redirect(`/board/board?id=${board_id}`);
+            });
+        
+        
         conn.release();
     });
 });

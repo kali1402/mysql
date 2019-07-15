@@ -7,6 +7,11 @@ const pool = require('../config/dbconfig');
 router.get('/', function(req, res, next) {
   pool.getConnection(function(err, conn) {
     conn.query('SELECT * FROM player;', function(err, results) {
+      if(req.user) {
+        req.session.ID = req.user[0].email;
+        console.log(req.session.ID);
+        res.render('index', { results : results });
+      }
       if (req.session.ID && req.session.PW ) {
         res.render('index', { results : results });
       } else {
@@ -43,7 +48,7 @@ router.post('/login', function(req, res, next) {
   const pw = req.body.pw;
   req.session.ID = req.body.id;
   req.session.PW = req.body.pw;
-
+  
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM player WHERE email = '${id}' AND pw = md5('${pw}');`,function(err, results){
       if(results.length > 0) {
@@ -63,6 +68,9 @@ router.get('/logout', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM player;', function(err, results){
       if (req.session.ID && req.session.PW ) {
+        res.render('index/logout', { results : results });
+        req.session.destroy();
+      } else if(req.session.ID) {
         res.render('index/logout', { results : results });
         req.session.destroy();
       } else {
