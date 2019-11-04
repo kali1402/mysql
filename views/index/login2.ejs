@@ -1,62 +1,63 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html oncontextmenu="return false" onselectstart="return false">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>로그인</title>
     <style>
-        h1{ 
-            padding: 30px; 
-            padding-top: 100px;
-            font-family: HY동녘M;
-            font-size: 42px;
-            color: grey;
-            text-shadow: 0px 1px #ffffff, 4px 4px 0px #dad7d7;
-            text-align: center;
-        }
-        button, a{
-            background-color: white;
-            border: none;
-            font-weight: bold;  
-            font-size: 27px;
-            text-decoration: none;
-            color: thistle;
-            padding: 20px; 
-            outline: none;
-            text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
-        }
-        p{
-            font-family: 한컴 솔잎 B; 
-            font-size: 27px;
-            color: black;
-        }
+      h1 {
+        padding: 30px;
+        padding-top: 100px;
+        font-family: HY동녘M;
+        font-size: 42px;
+        color: grey;
+        text-shadow: 0px 1px #ffffff, 4px 4px 0px #dad7d7;
+        text-align: center;
+      }
+      button,
+      a {
+        background-color: white;
+        border: none;
+        font-weight: bold;
+        font-size: 27px;
+        text-decoration: none;
+        color: thistle;
+        padding: 20px;
+        outline: none;
+        text-shadow: 0px 1px #ffffff, 1px 1px 0px #dad7d7;
+      }
+      p {
+        font-family: 한컴 솔잎 B;
+        font-size: 27px;
+        color: black;
+      }
     </style>
-</head>  
-<body> 
+  </head>
+  <body>
     <center>
-        <h1>로그인 되었습니다.</h1>
-        <p> 당신의 아이디는 : <%= id %></p>
-        <!-- <p> 당신의 비밀번호는 : <%= pw %></p> -->
-        <table>
-            <td>
-                <form method="get" action="/">
-                    <button>로그인</button>
-                </form>
-            </td>
-            <td>
-                <a href="/logout">로그아웃</a>
-            </td>
-            <td>
-                <a href="/index">회원정보</a>
-            </td>
-            <td>
-                <form action="/board/noticeboard">
-                    <button>게시판</button>
-                </form>
-            </td>
-            <form action="/game/game">
-                <button>?</button>
-            </form>
-        </table>
+      <h1>로그인 되었습니다.</h1>
+      <p>당신의 아이디는 : <%= id %></p>
+      <!-- <p> 당신의 비밀번호는 : <%= pw %></p> -->
+      <table>
+        <td>
+          <form method="get" action="/">
+            <button>로그인</button>
+          </form>
+        </td>
+        <td>
+          <a href="/logout">로그아웃</a>
+        </td>
+        <td>
+          <a href="/index">회원정보</a>
+        </td>
+        <td>
+          <form action="/board/noticeboard">
+            <button>게시판</button>
+          </form>
+        </td>
+        <form action="/game/game">
+          <button>게임</button>
+        </form>
+      </table>
     </center>
-</body>
-</html> 
+  </body>
+</html>
