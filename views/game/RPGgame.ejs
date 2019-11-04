@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        
+    </script>
+    <style>
+        .system {
+            border: 1px solid black;
+            padding: 15px;
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+        .system td {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    </style>
+    <script>
+        function key_check(){
+
+            if(event.keyCode=='100'){location.href="/game/dungeon";} // 100 = 'd'
+            else if(event.keyCode=='105'){location.href="/game/item";} // 105 = 'i'
+            else if(event.keyCode=='107'){location.href="/game/skill";} // 107 = 'k'
+            else if(event.keyCode=='112'){location.href="/game/shop";} // 112 = 'p'
+            else if(event.keyCode=='115'){location.href="/game/stat";} // 115 = 's'
+        }
+        document.onkeypress=key_check;
+    </script>
+</head>
+<body>
+    닉네임 : <%= results[0].nickname %> <br>
+    보유 돈 : <%= results[0].money %> <br>
+
+    <center>
+        <br><br><br><br><br><br><br><br><br><a href="/game/dungeon">[ d ] 던 전</a><br><a href="/game/shop">[ p ] 상 점</a><br><br><br><br><br><br><br><br><br><br><br>
+    
+        Lv. <%= results[0].lv %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HP <%= results[0].hp %> / <%= results[0].hpmax %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MP <%= results[0].mp %> / <%= results[0].mpmax %>
+        <br><br>
+        <div class="system">
+            <table>
+                <tr>
+                    <td><a href="/game/item" onclick="num('i')">[ i ] 인벤토리</a></td>
+                    <td><a href="/game/skill" onclick="num('k')">[ k ] 스 킬</a></td>
+                    <td><a href="/game/stat" onclick="num('s')">[ s ] 스 텟</a></td>
+                </tr>  
+            </table>
+        </div>
+    </center>
+</body>
+</html>

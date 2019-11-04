@@ -16,7 +16,7 @@
     </style>
     <script language="javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script>
-        var number = Math.floor(Math.random() * 1) + 1;
+        var number = Math.floor(Math.random() * 10) + 1;
         document.write('주의 사항 <button onclick="button()">보기</button><br><br><form action="/game/oddeven" method="post"><input type="hidden" id="oddeven" name="oddeven" value="'+number+'">');
 
         function showDiv( id ) { 
@@ -35,13 +35,13 @@
         }
 
         function button() {
-            alert("※주의 사항\n1. 홀 or 짝이 맞으면 2배\n2. 홀 or 짝이 맞고 숫자가 같으면 5배");
+            alert("※주의 사항\n1. 홀 or 짝이 맞으면 2배\n2. 홀 or 짝이 맞고 숫자가 같으면 4배");
         }
     </script>
 </head>
 <body>
         보유 금액 : <input type="text" value="<%= results[0].money %>" disabled><br><br>
-        배팅 금액 : <input type="text" name="money" id="money" value=""><br><br>
+        배팅 금액 : <input type="number" name="money" id="money" value=""><br><br>
         홀 <input type="radio" name="oddeven" onClick="showDiv( 'odd' );">
         <select name=odd style="visibility:hidden">
             <option value="">-----선택-----</option>
