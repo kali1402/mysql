@@ -26,12 +26,49 @@ router.get("/game", function(req, res, next) {
 // 던전1 공격하기
 router.get("/attack", function(req, res, next) {
   pool.getConnection(function(err, conn) {
-    conn.query(`SELECT * FROM monster WHERE id = '1';`, function(err, monster) {
-      console.log(monster[0].hp);
+    conn.query(`SELECT * FROM monster WHERE name='슬라임';`, function(
+      err,
+      monster
+    ) {
       conn.query(
         `SELECT * FROM rpggame WHERE player_id='${req.session.ID}';`,
         function(err, results) {
-          res.render("game/dungeon1");
+          conn.query(
+            `UPDATE monster SET hp = (${monster[0].hp -
+              results[0].ad}) WHERE name='슬라임';`,
+            function(err, result) {
+              conn.query(`SELECT * FROM monster WHERE name='슬라임';`, function(
+                err,
+                monster
+              ) {
+                conn.query(
+                  `SELECT * FROM rpggame WHERE player_id='${req.session.ID}';`,
+                  function(err, results) {
+                    conn.query(
+                      `UPDATE rpggame SET hp = (${results[0].hp -
+                        monster[0].ad}) WHERE player_id='${req.session.ID}';`,
+                      function(err, result) {
+                        conn.query(
+                          `SELECT * FROM monster WHERE name='슬라임';`,
+                          function(err, monster) {
+                            conn.query(
+                              `SELECT * FROM rpggame WHERE player_id='${req.session.ID}';`,
+                              function(err, results) {
+                                res.render("game/dungeon1", {
+                                  monster: monster,
+                                  results: results
+                                });
+                              }
+                            );
+                          }
+                        );
+                      }
+                    );
+                  }
+                );
+              });
+            }
+          );
         }
       );
     });
