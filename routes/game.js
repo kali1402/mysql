@@ -42,28 +42,32 @@ router.get("/attack", function(req, res, next) {
                 monster
               ) {
                 conn.query(
-                  `SELECT * FROM rpggame WHERE player_id='${req.session.ID}';`,
-                  function(err, results) {
-                    conn.query(
-                      `UPDATE rpggame SET hp = (${results[0].hp -
-                        monster[0].ad}) WHERE player_id='${req.session.ID}';`,
-                      function(err, result) {
-                        conn.query(
-                          `SELECT * FROM monster WHERE name='슬라임';`,
-                          function(err, monster) {
-                            conn.query(
-                              `SELECT * FROM rpggame WHERE player_id='${req.session.ID}';`,
-                              function(err, results) {
-                                res.render("game/dungeon1", {
-                                  monster: monster,
-                                  results: results
-                                });
-                              }
-                            );
-                          }
-                        );
-                      }
-                    );
+                  `UPDATE rpggame SET hp = (${results[0].hp -
+                    monster[0].ad}) WHERE player_id='${req.session.ID}';`,
+                  function(err, result) {
+                    if (results[0].hp <= 10) {
+                      conn.query(
+                        `UPDATE rpggame SET hp = 20 WHERE player_id='${req.session.ID}';`,
+                        function(err, update) {
+                          conn.query(
+                            `SELECT * FROM rpggame WHERE player_id='${req.session.ID}';`,
+                            function(err, results) {
+                              res.render("game/rpggame", { results: results });
+                            }
+                          );
+                        }
+                      );
+                    } else {
+                      conn.query(
+                        `SELECT * FROM rpggame WHERE player_id='${req.session.ID}';`,
+                        function(err, results) {
+                          res.render("game/dungeon1", {
+                            monster: monster,
+                            results: results
+                          });
+                        }
+                      );
+                    }
                   }
                 );
               });
